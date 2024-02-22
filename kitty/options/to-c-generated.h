@@ -955,6 +955,19 @@ convert_from_opts_allow_hyperlinks(PyObject *py_opts, Options *opts) {
 }
 
 static void
+convert_from_python_always_on_top(PyObject *val, Options *opts) {
+    opts->always_on_top = PyObject_IsTrue(val);
+}
+
+static void
+convert_from_opts_always_on_top(PyObject *py_opts, Options *opts) {
+    PyObject *ret = PyObject_GetAttrString(py_opts, "always_on_top");
+    if (ret == NULL) return;
+    convert_from_python_always_on_top(ret, opts);
+    Py_DECREF(ret);
+}
+
+static void
 convert_from_python_menu_map(PyObject *val, Options *opts) {
     menu_map(val, opts);
 }
@@ -1257,6 +1270,8 @@ convert_opts_from_python_opts(PyObject *py_opts, Options *opts) {
     convert_from_opts_close_on_child_death(py_opts, opts);
     if (PyErr_Occurred()) return false;
     convert_from_opts_allow_hyperlinks(py_opts, opts);
+    if (PyErr_Occurred()) return false;
+    convert_from_opts_always_on_top(py_opts, opts);
     if (PyErr_Occurred()) return false;
     convert_from_opts_menu_map(py_opts, opts);
     if (PyErr_Occurred()) return false;

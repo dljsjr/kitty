@@ -62,6 +62,9 @@ class Parser:
 
     choices_for_allow_remote_control = frozenset(('password', 'socket-only', 'socket', 'no', 'n', 'false', 'yes', 'y', 'true'))
 
+    def always_on_top(self, val:str, ans: typing.Dict[str, typing.Any]) -> None:
+        ans['always_on_top'] = to_bool(val)
+
     def background(self, val: str, ans: typing.Dict[str, typing.Any]) -> None:
         ans['background'] = to_color(val)
 

@@ -268,6 +268,12 @@ choices=normal,fullscreen,maximized,minimized
 The initial state for the newly created OS Window.
 
 
+--always-on-top
+type=bool-set
+When using :option:`--type=os-window <launch --type>`, the new window will
+be configured as floating/"Always On Top" window.
+
+
 --logo
 completion=type:file ext:png group:"PNG images" relative:conf
 Path to a PNG image to use as the logo for the newly created window. See
@@ -345,7 +351,8 @@ def tab_for_window(boss: Boss, opts: LaunchCLIOptions, target_tab: Optional[Tab]
                 wclass=opts.os_window_class,
                 wname=opts.os_window_name,
                 window_state=opts.os_window_state,
-                override_title=opts.os_window_title or None)
+                override_title=opts.os_window_title or None,
+                always_on_top=opts.always_on_top)
             tm = boss.os_window_map[oswid]
         tab = tm.new_tab(empty_tab=True, location=opts.location)
         if opts.tab_title:

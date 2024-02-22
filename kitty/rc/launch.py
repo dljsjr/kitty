@@ -48,6 +48,7 @@ class Launch(RemoteCommand):
     os_window_name/str: WM_NAME for OS Window
     os_window_class/str: WM_CLASS for OS Window
     os_window_state/choices.normal.fullscreen.maximized.minimized: The initial state for OS Window
+    always_on_top/bool: Boolean, if true and creating a new OS window, configure the window to be always on top.
     color/list.str: list of color specifications such as foreground=red
     watcher/list.str: list of paths to watcher files
     '''

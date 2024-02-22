@@ -138,6 +138,7 @@ def completion(self: TestCompletion, tdir: str):
     add('kitty -1d ', all_words('exe1'))
     add('kitty -1d', all_words('-1d'))
     add('kitty -o a', has_words('allow_remote_control='))
+    add('kitty -o a', has_words('always_on_top='))
     add('kitty --listen-on ', all_words('unix:', 'tcp:'))
     add('kitty --listen-on unix:b', all_words('unix:bin/'))
     add('kitty --directory=', all_words('--directory=bin/', '--directory=sub/'))

@@ -1831,16 +1831,22 @@ static bool createNativeWindow(_GLFWwindow* window,
             _glfw.ns.cascadePoint = CGPointZero;
         }
 
-        if (wndconfig->resizable)
+        if (wndconfig->resizable && !(wndconfig->floating))
         {
-            const NSWindowCollectionBehavior behavior =
-                NSWindowCollectionBehaviorFullScreenPrimary |
-                NSWindowCollectionBehaviorManaged;
+            NSWindowCollectionBehavior behavior =
+                NSWindowCollectionBehaviorFullScreenPrimary | NSWindowCollectionBehaviorManaged;;
             [window->ns.object setCollectionBehavior:behavior];
         }
 
         if (wndconfig->floating)
-            [window->ns.object setLevel:NSFloatingWindowLevel];
+        {
+            [window->ns.object setLevel:NSStatusWindowLevel];
+            const NSWindowCollectionBehavior behavior = (NSWindowCollectionBehaviorCanJoinAllSpaces |
+                                                        NSWindowCollectionBehaviorCanJoinAllApplications |
+                                                          NSWindowCollectionBehaviorIgnoresCycle |
+                                                          NSWindowCollectionBehaviorTransient);
+            [window->ns.object setCollectionBehavior:behavior];
+        }
 
         if (wndconfig->maximized)
             [window->ns.object zoom:nil];

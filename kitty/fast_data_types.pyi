@@ -517,6 +517,7 @@ def create_os_window(
     x: Optional[int] = None,
     y: Optional[int] = None,
     disallow_override_title: bool = False,
+    always_on_top: bool = False
 ) -> int:
     pass
 

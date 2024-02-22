@@ -364,6 +364,7 @@ class Boss:
             except Exception:
                 self.misc_config_errors.append(f'Invalid listen_on={args.listen_on}, ignoring')
                 log_error(self.misc_config_errors[-1])
+        self.always_on_top = opts.always_on_top
         self.child_monitor = ChildMonitor(
             self.on_child_death,
             DumpCommands(args) if args.dump_commands or args.dump_bytes else None,
@@ -406,19 +407,21 @@ class Boss:
         opts_for_size: Optional[Options] = None,
         startup_id: Optional[str] = None,
         override_title: Optional[str] = None,
+        always_on_top: Optional[bool] = None,
     ) -> int:
         if os_window_id is None:
             size_data = get_os_window_sizing_data(opts_for_size or get_options(), startup_session)
             wclass = wclass or getattr(startup_session, 'os_window_class', None) or self.args.cls or appname
             wname = wname or self.args.name or wclass
             wtitle = override_title or self.args.title
+            always_on_top = always_on_top or self.always_on_top
             window_state = window_state or getattr(startup_session, 'os_window_state', None)
             wstate = parse_os_window_state(window_state) if window_state is not None else None
             with startup_notification_handler(do_notify=startup_id is not None, startup_id=startup_id) as pre_show_callback:
                 os_window_id = create_os_window(
                         initial_window_size_func(size_data, self.cached_values),
                         pre_show_callback,
-                        wtitle or appname, wname, wclass, wstate, disallow_override_title=bool(wtitle))
+                        wtitle or appname, wname, wclass, wstate, disallow_override_title=bool(wtitle), always_on_top=bool(always_on_top))
         else:
             wname = self.args.name or self.args.cls or appname
             wclass = self.args.cls or appname

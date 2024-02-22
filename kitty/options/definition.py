@@ -1202,6 +1202,15 @@ currently running. Note that if you want confirmation when closing individual
 windows, you can map the :ac:`close_window_with_confirmation` action.
 '''
     )
+
+opt('always_on_top', 'no',
+    option_type='to_bool', ctype='bool',
+    long_text='''
+OS Windows will be configured as floating/always-on-top windows if this option is
+set to :code:`yes`.
+'''
+    )
+
 egr()  # }}}
 
 

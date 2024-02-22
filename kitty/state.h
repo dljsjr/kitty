@@ -74,6 +74,7 @@ typedef struct {
     bool close_on_child_death;
     bool window_alert_on_bell;
     bool debug_keyboard;
+    bool always_on_top;
     bool allow_hyperlinks;
     struct { monotonic_t on_end, on_pause; } resize_debounce_time;
     MouseShape pointer_shape_when_grabbed;
